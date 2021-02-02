@@ -3,12 +3,9 @@
 // Created	:Thu Nov  8 19:32:43 2018
 #include "yasjp/impl/yasjp.h"
 
-namespace yasjp
-{
-namespace impl
-{
-    
+namespace yasjp {
+namespace impl {
 
 }
 
-}
+}  // namespace yasjp

@@ -5,10 +5,8 @@
 
 #include <string>
 
-namespace yasjp
-{
-enum class ValueType
-{
+namespace yasjp {
+enum class ValueType {
     String,
     Number,
     Object,
@@ -17,49 +15,42 @@ enum class ValueType
     Null
 }
 
-class Value
-{
+class Value {
 public:
     using ValueType_t = ValueType;
 
-    constexpr ValueType_t type() const
-    {
+    constexpr ValueType_t type() const {
         return typeId_;
     }
 
 protected:
     Value(const ValueType_t typeId)
-        : typeId_(typeId)
-    {
+        : typeId_(typeId) {
     }
 
     ValueType_t typeId_;
 };
 
 template <typename T>
-    T lexical_cast(const Value& v);
+T lexical_cast(const Value& v);
 
-class Array
-{
+class Array {
 public:
     size_t size() const;
     bool empty() const;
     const Value& operator[](const size_t idx) const;
 };
-    
-class KeyValuePair
-{
+
+class KeyValuePair {
 public:
     using Key_t = std::string;
     using Value_t = Value;
 
-    const Key_t& key() const
-    {
+    const Key_t& key() const {
         return key_;
     }
 
-    const Value_t& value() const
-    {
+    const Value_t& value() const {
         return value_;
     }
 
@@ -68,8 +59,7 @@ protected:
     Value_t value_;
 };
 
-class Object
-{
+class Object {
 public:
     using Key_t = std::string;
     using Value_t = Value;
@@ -80,4 +70,4 @@ public:
     const Value_t& operator[](const Key_t& key) const;
 };
 
-}
+}  // namespace yasjp
