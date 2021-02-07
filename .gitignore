@@ -6,9 +6,9 @@ Makefile
 Makefile.in
 configure
 stamp-h1
-DefenderConfigure.h.in
-DefenderConfigure.h.in~
-DefenderConfigure.h
+yasjp-config.h
+yasjp-config.h.in
+yasjp-config.h.in~
 *.spec
 aclocal.m4
 m4/*.m4
@@ -26,15 +26,7 @@ config.status
 .deps
 .libs
 libtool
-src/defenderd
 test/unit-test-*
 defenderd.xml.cfg
-.empty-file-namsdefender-*
 .dirstamp
-*.pyc
-__pycache__
-defender.conf
-etc/rc.d/init.d/defenderd
-namsdefender-*.tar.gz
-tmpfiles.d/defenderd.conf
 

@@ -1,7 +1,12 @@
 include_yasjpdir = ${includedir}/yaspjp
 
 include_yasjp_HEADERS = \
-	yaspjp/yaspjp.h
+	yasjp/yasjp.h
 
 dist_noinst_HEADERS = \
-	yaspjp/impl/yaspjp.h
+	yasjp/impl/NumberContainer.h \
+	yasjp/impl/StringContainer.h \
+	yasjp/impl/yasjp.h
+
+nodist_HEADER = \
+	yasjp-config.h

@@ -8,7 +8,7 @@ namespace impl {
 template <typename ValueType,
           typename ValueTypeContainer,
           ValueType typeId>
-class ValueImpl final: public Value {
+class ValueImpl final: public yasjp::Value {
 public:
     using ValueType_t = ValueType;
 

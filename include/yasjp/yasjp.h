@@ -6,6 +6,22 @@
 #include <string>
 
 namespace yasjp {
+namespace Token {
+using Token_t = enum {
+    // clang-format off
+    OpenBrace    = '{',
+    CloseBrace   = '}',
+    OpenBracket  = '[',
+    CloseBracket = ']',
+    Column       = ':',
+    Literal,
+    EOF,
+    Error
+    // clang-format on
+};
+
+}
+
 enum class ValueType {
     String,
     Number,
