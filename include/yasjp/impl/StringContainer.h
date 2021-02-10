@@ -3,6 +3,7 @@
 // Created	:Thu Nov  8 19:55:10 2018
 #pragma once
 
+#if 0
 namespace yasjp {
 namespace impl {
 namespace containers {
@@ -15,3 +16,4 @@ using ValueString = ValueImpl<std::string, containers::StringContainer, ValueTyp
 }  // namespace impl
 
 }  // namespace yasjp
+#endif  // 0

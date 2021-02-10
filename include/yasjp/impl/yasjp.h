@@ -3,6 +3,7 @@
 // Created	:Thu Nov  8 17:46:54 2018
 #pragma once
 
+#if 0
 namespace yasjp {
 namespace impl {
 template <typename ValueType,
@@ -43,3 +44,4 @@ namspace containers {
 }  // namespace impl
 
 }  // namespace yasjp
+#endif  // 0

@@ -3,6 +3,7 @@
 // Created	:Thu Nov  8 19:56:17 2018
 #pragma once
 
+#if 0
 namespace yasjp {
 namespace impl {
 namespace containers {
@@ -21,3 +22,4 @@ private:
 }  // namespace impl
 
 }  // namespace yasjp
+#endif  // 0

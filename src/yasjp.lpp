@@ -19,33 +19,44 @@
 
 <<EOF>> {
     /* Process EOF symbol */
-    return yasjp::Token::EOF;
+    return yasjp::GrammarParser::token::YYEOF;
 }
 
 \{ {
     /* Process `{` symbol */
-    return yasjp::Token::OpenBrace;
+    return yasjp::GrammarParser::token::OpenBrace;
 }
 
 \} {
     /* Process `}` symbol */
-    return yasjp::Token::CloseBrace;
+    return yasjp::GrammarParser::token::CloseBrace;
 }
 
 \[ {
     /* Process `[` symbol */
-    return yasjp::Token::OpenBracket;
+    return yasjp::GrammarParser::token::OpenBracket;
 }
 
 \] {
     /* Process `[` symbol */
-    return yasjp::Token::CloseBracket;
+    return yasjp::GrammarParser::token::CloseBracket;
 }
 
 \: {
     /* Process `:` symbol */
-    return yasjp::Token::Column;
+    return yasjp::GrammarParser::token::Column;
 }
+
+\, {
+    /* Process `,` symbol */
+    return yasjp::GrammarParser::token::Comma;
+}
+
+nill {
+    /* Process `nill` word */
+    return yasjp::GrammarParser::token::Nill;
+}
+
 
 \" {
     /* Start collecting symbols into a string literal */
@@ -65,7 +76,7 @@
 
 <string_literal>\\\/ {
     /* Add / symbol to resulting literal */
-    addStringChunk('\/');
+    addStringChunk('\\');
 }
 
 <string_literal>\\b {
@@ -106,12 +117,19 @@
 <string_literal>\n  {
     /* Error - unterminated string literal,
        generate error message */
+    return yasjp::GrammarParser::token::Error;
 }
 
 <string_literal>\" {
     /* Finalize collecting symbols into a string literal */
     BEGIN(INITIAL);
     completeStringLiteral();
+    return yasjp::GrammarParser::token::StringLiteral;
+}
+
+.+ {
+    /* Finalizing rule: unrecognized symbol/literal */
+    return yasjp::GrammarParser::token::YYUNDEF;
 }
 
 %%

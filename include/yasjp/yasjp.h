@@ -29,8 +29,9 @@ enum class ValueType {
     Array,
     Bool,
     Null
-}
+};
 
+#if 0  
 class Value {
 public:
     using ValueType_t = ValueType;
@@ -85,5 +86,7 @@ public:
     bool has(const Key_t& key) const;
     const Value_t& operator[](const Key_t& key) const;
 };
+
+#endif //  0
 
 }  // namespace yasjp

@@ -2,20 +2,27 @@ lib_LTLIBRARIES = \
 	libyasjp.la
 
 libyasjp_la_SOURCES = \
+	GrammarParser.cpp \
+	LexParser.cpp \
 	yasjp.cpp \
-	Cast.cpp \
-	FlexLexer.cpp
+	Cast.cpp
 
 nodist_noinst_HEADER = \
-	../include/yasjp/impl/FlexLexer.h
+	../include/yasjp/impl/LexParser.h
 
-FlexLexer.cpp: yasjp.lex Makefile
-	${LEX} \
-		--outfile=src/FlexLexer.cpp \
-		--header-file=../include/yasjp/impl/FlexLexer.h \
-		--debug --perf-report --verbose \
+GrammarParser.cpp: yasjp.ypp Makefile
+	${BISON} yasjp.ypp \
+		--debug --token-table --verbose --feature=all \
+		-o GrammarParser.cpp
+
+LexParser.cpp: yasjp.lex Makefile
+	${FLEX} \
+		--outfile=LexParser.cpp \
+		--header-file=../include/yasjp/impl/LexParser.h \
+		--debug --perf-report --verbose --language=C++ \
 		yasjp.lex
 
 clean-local:
-	${RM} src/FlexLexer.cpp
-	${RM} ../include/yasjp/impl/FlexLexer.h
+	${RM} LexParser.cpp
+	${RM} GrammarParser.cpp GrammarParser.output GrammarParserLocation.h
+	${RM} ../include/yasjp/impl/LexParser.h

@@ -3,6 +3,7 @@
 // Created	:Thu Nov  8 20:01:03 2018
 #include "yasjp/impl/yasjp.h"
 
+#if 0
 namespace yasjp {
 using ValueString = yasjp::impl::ValueImpl<std::string, yasjp::impl::containers::StringContainer>;
 
@@ -73,3 +74,5 @@ template <> bool lexical_cast<bool>(const yasjp::Value& v) {
 }
 
 }  // namespace yasjp
+
+#endif  // 0

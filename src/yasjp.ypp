@@ -1,0 +1,86 @@
+/*
+ * File		:yasjp.y
+ * Author	:Victor Kovalevich
+ * Created	:Thu Nov  8 17:20:02 2018
+ */
+
+/*
+ * Prologue */
+%require "3.6.4"
+%language "c++"
+%skeleton "lalr1.cc"                    
+%locations                  
+%define api.value.type variant
+%define api.token.constructor
+%define api.token.prefix { TOCKEN_ }
+%define api.namespace { yasjp }
+%define api.parser.class { GrammarParser }
+%define api.location.file "GrammarParserLocation.h"
+%define api.location.include { "GrammarParserLocation.h" }
+%define parse.lac full
+%output "GrammarParser.cpp"
+                        
+%code {
+#include "yasjp/impl/yasjp.h"
+}
+
+/*
+%union
+{
+}
+*/
+
+/*                      
+ * Grammar rules */
+%%
+
+%nterm <yasjp::ObjectSPtr_t> JSON;
+%nterm <yasjp::ObjectSPtr_t> Object;
+%nterm <yasjp::KeyValuePairListSPtr_t> KeyValuePairList;
+%nterm <yasjp::KeyValuePairSPtr_t> KeyValuePair;
+%nterm <yasjp::ArraySPtr_t> Array;
+%nterm <yasjp::ArrayItemListSPtr_t> ArrayItemList;
+
+%token <yasjp::StringSPtr_t> StringLiteral;
+%token OpenBrace CloseBrace OpenBracket CloseBracket Comma Column Null;
+
+%destructor { $$.reset(); } JSON Object KeyValuePairList KeyValuePair Array ArrayItemList StringLiteral;
+
+%start JSON;
+
+JSON:
+                Object YYEOF { $$ = $1; }
+        ;
+        
+Object:
+                OpenBrace KeyValuePairList CloseBrace { $$ = newObject($2); }
+        ;
+
+KeyValuePairList:
+                %empty                              { $$ = newKeyValueList(); }
+        |       KeyValuePair                        { $$ = newKeyValueList(); $$->append($1); }
+        |       KeyValuePairList Comma KeyValuePair { $1->append($3); $$ = $1; }
+        ;
+
+KeyValuePair:
+                StringLiteral Column StringLiteral   { $$ = newKeyValuePair($1, $3); }
+        |       StringLiteral Column Null            { $$ = newKeyValuePair($1); }
+        |       StringLiteral Column Array           { $$ = newKeyValuePair($1, $3); }
+        |       StringLiteral Column Object          { $$ = newKeyValuePair($1, $3); }
+        ;
+
+Array:
+                OpenBracket ArrayItemList CloseBracket { $$ = newArray($2); }
+        ;
+
+ArrayItemList:
+                %empty                     { $$ = newArrayItemList(); }
+        |       Object                     { $$ = newArrayItemList(); $$->append($1); }
+        |       Null                       { $$ = newArrayItemList(); $$->append(); }
+        |       ArrayItemList Comma Object { $1->append($3); $$ = $1; }
+        |       ArrayItemList Comma Null   { $1->append(); $$ = $1; }
+        ;
+%%
+
+/*
+ * Epilogue */
